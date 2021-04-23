@@ -18,12 +18,13 @@ def sent_emb(text):
     result = model(input_ids)
     pred_ids = result[0][:, masked_index].topk(10).indices.tolist()[0]
 
+    '''
     output = []
     for pred_id in pred_ids:
         output_ids = input_ids.tolist()[0]
         output_ids[masked_index] = pred_id
         print(tokenizer.decode(output_ids))
         output.append(tokenizer.decode(output_ids))
-
     return output
-
+    '''
+    return tokenizer.decode(pred_ids).split(' ')
