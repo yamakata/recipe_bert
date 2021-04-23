@@ -27,12 +27,16 @@ def sent_emb(text):
         #print(text)
         text_segmented = m.parse(text)
         # print(text_segmented)
-        line = text_segmented.split('\n')[masked_index+2]
-        tmp = line.split('\t')
-        rslt = {}
-        rslt['surface'] = tmp[0]
-        rslt['pos'] = tmp[3:6]
-        rslt['output_text'] = text
-        output.append(rslt)
+        sub = []
+        for line in text_segmented.split('\n')[3:-5]:
+            tmp = line.split('\t')
+            print(tmp)
+            rslt = {}
+            rslt['surface'] = tmp[0]
+            rslt['baseform'] = tmp[2]
+            rslt['pos'] = tmp[3:6]
+            sub.append(rslt)
+        output.append(sub)
+        print('------')
     return output
 
