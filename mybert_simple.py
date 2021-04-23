@@ -1,13 +1,12 @@
 import torch
 from transformers.tokenization_bert_japanese import BertJapaneseTokenizer
 from transformers.modeling_bert import BertForMaskedLM, BertConfig
-import MeCab
 
 # Load the models
 tokenizer = BertJapaneseTokenizer.from_pretrained('model/')
 config = BertConfig.from_json_file('model/bert_base_32k_config.json')
 model = BertForMaskedLM.from_pretrained('model/model.ckpt-580000_pytorch.bin', config=config)
-m=MeCab.Tagger("-Ochasen")
+
 
 def sent_emb(text):
     print('text:', text)
@@ -19,20 +18,13 @@ def sent_emb(text):
     result = model(input_ids)
     pred_ids = result[0][:, masked_index].topk(10).indices.tolist()[0]
 
+    '''
     output = []
     for pred_id in pred_ids:
         output_ids = input_ids.tolist()[0]
         output_ids[masked_index] = pred_id
-        text = ''.join(tokenizer.decode(output_ids))
-        #print(text)
-        text_segmented = m.parse(text)
-        # print(text_segmented)
-        line = text_segmented.split('\n')[masked_index+2]
-        tmp = line.split('\t')
-        rslt = {}
-        rslt['surface'] = tmp[0]
-        rslt['pos'] = tmp[3:6]
-        rslt['output_text'] = text
-        output.append(rslt)
+        print(tokenizer.decode(output_ids))
+        output.append(tokenizer.decode(output_ids))
     return output
-
+    '''
+    return tokenizer.decode(pred_ids).split(' ')

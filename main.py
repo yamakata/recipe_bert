@@ -28,10 +28,10 @@ def sent():
     dic = {}
     if request.args.get("sent", "") is not None:
         print('query:', request.args.get("text", ""))
-        dic['text'] = request.args.get("text", "")
-        dic['vec'] = sent_emb(dic['text'])
+        dic['input_text'] = request.args.get("text", "")
+        dic['morphemes'] = sent_emb(dic['input_text'])
     else:
-        dic['text'] = 'No query submitted.'
+        dic['input_text'] = 'No query submitted.'
         
     return json.dumps(dic, indent=2, ensure_ascii=False)
 
