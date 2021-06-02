@@ -2,7 +2,7 @@
 ## 環境構築
 
 試してませんがおそらくこんな手順ではないかと思っています。
-
+Cancel changes
 #### 1. Python仮想環境の作成
 ```
 python3 -m venv env
@@ -41,6 +41,11 @@ sh run_local.sh
 [http://localhost:8000/sent?text=水で洗ったほうれん草を[MASK]]()
 
 ### サーバにデプロイ
+デプロイのスクリプトを編集。以下は、GCPのプロジェクト名が`webapi-python`の例。もしプロジェクト名が`recipe-classification`ならそのように変更してください。
+```
+gcloud app deploy --project webapi-python --version main2
+```
+デプロイのスクリプトを実行。
 ```
 sh deploy.sh
 ```
